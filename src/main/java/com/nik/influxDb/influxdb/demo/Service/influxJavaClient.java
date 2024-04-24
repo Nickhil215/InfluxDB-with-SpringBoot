@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2024.
+ *    Author :: Nikhil Vanamala.
+ *    All rights reserved To NIKHIL VANAMALA.
+ * .
+ */
+
 package com.nik.influxDb.influxdb.demo.Service;
 
 import com.influxdb.client.InfluxDBClient;
@@ -26,16 +33,16 @@ public class influxJavaClient {
   InfluxDBClient influxDBClient;
   WriteApiBlocking writeApi;
   int i = 0;
-  private char[] token = "sx3ZNuuivhpSMxIQVq8RBuFPmFucBeFC1hyiJ-YmOVtnETiQ_8SCFNjJ7LZ3G8L47z1IEKfEMpYjt5hthdXYwg==".toCharArray();
-  private String org = "nikhil";
-  private String bucket = "Nikhil";
+  private final char[] token = "sx3ZNuuivhpSMxIQVq8RBuFPmFucBeFC1hyiJ-YmOVtnETiQ_8SCFNjJ7LZ3G8L47z1IEKfEMpYjt5hthdXYwg==".toCharArray();
+  private final String org = "nikhil";
+  private final String bucket = "Nikhil";
 
   public influxJavaClient() {
     influxDBClient = InfluxDBClientFactory.create("http://localhost:8086", token, org, bucket);
     writeApi = influxDBClient.getWriteApiBlocking();
   }
 
-//  @Scheduled(fixedRate = 10000  )
+  //  @Scheduled(fixedRate = 10000  )
   public void insertDataIntoTable() {
     int age = (int) (Math.random() * 100) + 1;
     LOGGER.info("========= ::::::::::::  Age ::::::::  ======== " + age);
@@ -44,7 +51,7 @@ public class influxJavaClient {
         .addTag("name", "Guru")
         .addTag("Location", "Hyd")
         .addTag("Country", "India")
-        .addField("Age",age);
+        .addField("Age", age);
     writeApi.writePoint(point);
   }
 
@@ -62,7 +69,7 @@ public class influxJavaClient {
     return point;
   }
 
-//  @Scheduled(fixedRate = 600)
+  //  @Scheduled(fixedRate = 600)
   public void insertContinoues() {
     Point point = Point.measurement("Ages")
         .time(System.currentTimeMillis(), WritePrecision.MS)
@@ -126,11 +133,11 @@ public class influxJavaClient {
         "from(bucket: \"%s\") |> range(start: %s, stop: %s) |> filter(fn: (r) => r._measurement == \"%s\")",
         bucket, start, end, measurementName));
     for (Map.Entry<String, Object> filter : filters.entrySet()) {
-      if(filter.getValue() instanceof Integer){
+      if (filter.getValue() instanceof Integer) {
         filterBuilder.append(String.format(" |> filter(fn: (r) => r.%s == %d)", filter.getKey(),
-            filter.getValue()));
+            (int) filter.getValue()));
 
-      }else{
+      } else {
         filterBuilder.append(String.format(" |> filter(fn: (r) => r.%s == \"%s\")", filter.getKey(),
             filter.getValue()));
       }
@@ -156,18 +163,20 @@ public class influxJavaClient {
 
   }
 
-  public FluxRecord getLatestData(String bucket, String measurementName, String start, String end, Map<String,Object>filters) {
-    String getQuery = String.format(
+  public FluxRecord getLatestData(String bucket, String measurementName, String start, String end,
+      Map<String, Object> filters) {
+    StringBuilder getQueryBuilder = new StringBuilder();
+    getQueryBuilder.append(String.format(
         "from(bucket: \"%s\") |> range(start: %s, stop: %s) |> filter(fn: (r) => r._measurement == \"%s\") |> sort(columns: [\"_time\"], desc: true) |> limit(n:1)",
-        bucket, start, end, measurementName);
+        bucket, start, end, measurementName));
 
     for (Map.Entry<String, Object> filter : filters.entrySet()) {
-      getQuery+= (String.format(" |> filter(fn: (r) => r.%s == \"%s\")", filter.getKey(),
+      getQueryBuilder.append(String.format(" |> filter(fn: (r) => r.%s == \"%s\")", filter.getKey(),
           filter.getValue()));
     }
-    LOGGER.info("get data Query is " + getQuery);
+    LOGGER.info("get data Query is " + getQueryBuilder);
 
-    List<FluxTable> tables = influxDBClient.getQueryApi().query(getQuery, org);
+    List<FluxTable> tables = influxDBClient.getQueryApi().query(getQueryBuilder.toString(), org);
 
     if (tables.isEmpty() || tables.get(0).getRecords().isEmpty()) {
       return null; // or throw an exception

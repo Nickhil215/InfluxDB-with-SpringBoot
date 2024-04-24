@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2024.
+ *    Author :: Nikhil Vanamala.
+ *    All rights reserved To NIKHIL VANAMALA.
+ * .
+ */
+
 package com.nik.influxDb.influxdb.demo.Model;
 
 import lombok.AllArgsConstructor;
@@ -8,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DataInfo {
+
   private String dbName;
   private String tableName;
   private String name;

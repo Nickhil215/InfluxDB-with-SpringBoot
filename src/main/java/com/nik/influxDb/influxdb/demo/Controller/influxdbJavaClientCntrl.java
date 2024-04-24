@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2024.
+ *    Author :: Nikhil Vanamala.
+ *    All rights reserved To NIKHIL VANAMALA.
+ * .
+ */
+
 package com.nik.influxDb.influxdb.demo.Controller;
 
 import com.influxdb.client.write.Point;
@@ -26,10 +33,6 @@ public class influxdbJavaClientCntrl {
 //    client.insertDataIntoTable("userGaian");
   }
 
-//  @GetMapping("/getAlldata/{tableName}")
-//  public List<FluxRecord> getData(@PathVariable String tableName) {
-//    return client.getData(tableName);
-//  }
 
   @PostMapping("/insert")
   public Point insertData(@RequestBody DataInfo data) {
@@ -66,24 +69,14 @@ public class influxdbJavaClientCntrl {
   }
 
 
-
-
-//
-//  @GetMapping("/insertContinoues")
-//  public void insertContinoues() {
-//    client.insertContinoues();
-//  }
-
-
-
   @PostMapping("/getLatestData/{bucket}/{measurementName}")
   public FluxRecord getLatestData(@PathVariable String bucket,
       @PathVariable String measurementName, @RequestParam(defaultValue = "-24h") String start,
-      @RequestParam(defaultValue = "#{T(java.time.Instant).now().toString()}") String end,@RequestBody() Map<String, Object> filters) {
+      @RequestParam(defaultValue = "#{T(java.time.Instant).now().toString()}") String end,
+      @RequestBody() Map<String, Object> filters) {
 
     return client.getLatestData(bucket, measurementName, start, end, filters);
   }
-
 
 
 }
