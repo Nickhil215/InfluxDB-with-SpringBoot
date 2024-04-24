@@ -1,73 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<!--
+  ~ Copyright (c) 2024.
+  ~    Author :: Nikhil Vanamala.
+  ~    All rights reserved To NIKHIL VANAMALA.
+  ~ .
+  -->
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.4</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  <groupId>com.nik.influxDb</groupId>
   <artifactId>influxdb-demo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>influxdb-demo</name>
-  <description>Demo project for Spring Boot influxdb demo</description>
-  <properties>
-    <java.version>21</java.version>
-  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <groupId>org.springframework.boot</groupId>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
 
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
     </dependency>
 
 
-
     <dependency>
-      <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
+      <groupId>com.alibaba</groupId>
       <version>1.1.0</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>com.influxdb</groupId>-->
-<!--      <artifactId>influxdb-spring</artifactId>-->
-<!--      <version>7.0.0</version>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>com.influxdb</groupId>-->
+    <!--      <artifactId>influxdb-spring</artifactId>-->
+    <!--      <version>7.0.0</version>-->
+    <!--    </dependency>-->
 
-<!--    <dependency>-->
-<!--      <groupId>org.influxdb</groupId>-->
-<!--      <artifactId>influxdb-java</artifactId>-->
-<!--      <version>2.21</version>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.influxdb</groupId>-->
+    <!--      <artifactId>influxdb-java</artifactId>-->
+    <!--      <version>2.21</version>-->
+    <!--    </dependency>-->
 
     <dependency>
-      <groupId>com.influxdb</groupId>
       <artifactId>influxdb-client-java</artifactId>
+      <groupId>com.influxdb</groupId>
       <version>4.0.0</version>
     </dependency>
 
     <dependency>
-      <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
       <optional>true</optional>
     </dependency>
-  </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
+
+    <!-- Apache Commons CSV for CSV file handling -->
+    <dependency>
+      <artifactId>commons-csv</artifactId>
+      <groupId>org.apache.commons</groupId>
+      <version>1.8</version>
+    </dependency>
+
+    <!-- Apache HttpClient for making HTTP requests -->
+    <dependency>
+      <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents</groupId>
+      <version>4.5.13</version>
+    </dependency>
+  </dependencies>
+  <description>Demo project for Spring Boot influxdb demo</description>
+  <groupId>com.nik.influxDb</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <name>influxdb-demo</name>
+  <parent>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <relativePath/>
+    <version>3.2.4</version> <!-- lookup parent from repository -->
+  </parent>
+  <properties>
+    <java.version>21</java.version>
+  </properties>
+
+  <version>0.0.1-SNAPSHOT</version>
 
 </project>
