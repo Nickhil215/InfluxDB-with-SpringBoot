@@ -12,11 +12,10 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -106,6 +105,11 @@ public class influxJavaClient {
         bucket, start, end, measurementName);
     LOGGER.info("get data Query is " + getQuery);
 
+    return getFluxRecords(getQuery);
+  }
+
+  @NotNull
+  private List<FluxRecord> getFluxRecords(String getQuery) {
     List<FluxTable> tables = influxDBClient.getQueryApi().query(getQuery, org);
 
     List<FluxRecord> records = new ArrayList<>();
@@ -134,12 +138,7 @@ public class influxJavaClient {
 
     String getQuery = filterBuilder.toString();
     LOGGER.info("getDataWithFilter Query is :: " + getQuery);
-    List<FluxTable> tables = influxDBClient.getQueryApi().query(getQuery, org);
-    List<FluxRecord> records = new ArrayList<>();
-    for (FluxTable table : tables) {
-      records.addAll(table.getRecords());
-    }
-    return records;
+    return getFluxRecords(getQuery);
   }
 
   public void DeleteWithFilters(String bucket, String measurementName, String startTime, String end,
